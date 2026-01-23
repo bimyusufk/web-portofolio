@@ -2,6 +2,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { TypewriterText } from "@/components/typewriter-text";
 import { ArrowUpRight, Code2, Database, Brain, Container, GitBranch, Zap } from "lucide-react";
 import Link from "next/link";
 
@@ -44,12 +45,13 @@ export default function Home() {
               <span>Tech Lead & Software Engineer</span>
             </div>
             
-            <h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-              Membangun Solusi dengan Arsitektur Digital dan AI untuk{" "}
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                Dampak Nyata
-              </span>
-            </h1>
+            <div className="mx-auto max-w-3xl rounded-2xl bg-slate-950/50 p-8 ring-1 ring-emerald-500/20 backdrop-blur">
+              <TypewriterText 
+                text="Halo! Saya Bim Yusuf Karang. Saya senang mengerjakan pengembangan software untuk mendukung transformasi digital dan mengeksplorasi potensi baru di dunia Machine Learning dan Artificial Intelligence. Saya punya visi untuk terus tumbuh menjadi teknolog yang memberi dampak positif bagi masyarakat."
+                speed={20}
+                className="text-base leading-relaxed sm:text-lg lg:text-xl"
+              />
+            </div>
             
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 text-base">
