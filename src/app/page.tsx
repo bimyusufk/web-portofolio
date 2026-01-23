@@ -21,12 +21,12 @@ const techStack = [
   {
     category: "Data & AI",
     icon: Brain,
-    skills: ["Python", "MongoDB", "ML Research", "Statistics"],
+    skills: ["Python", "MongoDB", "PostgreSQL","ML Research", "Statistics"],
   },
   {
     category: "Tools",
     icon: Container,
-    skills: ["Docker", "Git", "Vercel", "CI/CD"],
+    skills: ["Git", "Vercel", "CI/CD"],
   },
 ];
 
@@ -44,13 +44,11 @@ export default function Home() {
               <span>Tech Lead & Software Engineer</span>
             </div>
             
-            <div className="mx-auto max-w-3xl rounded-2xl bg-slate-950/50 p-8 ring-1 ring-emerald-500/20 backdrop-blur">
-              <TypewriterText 
-                text="Halo! Saya Bim Yusuf Karang. Saya senang mengerjakan pengembangan software untuk mendukung transformasi digital dan mengeksplorasi potensi baru di dunia Machine Learning dan Artificial Intelligence. Saya punya visi untuk terus tumbuh menjadi teknolog yang memberi dampak positif bagi masyarakat."
-                speed={20}
-                className="text-base leading-relaxed sm:text-lg lg:text-xl"
-              />
-            </div>
+            <TypewriterText 
+              text="Halo! Saya Bim Yusuf Karang. Saya senang mengerjakan pengembangan software untuk mendukung transformasi digital dan mengeksplorasi potensi baru di dunia Machine Learning dan Artificial Intelligence. Saya punya visi untuk terus tumbuh menjadi teknolog yang memberi dampak positif bagi masyarakat."
+              speed={20}
+              className="text-base leading-relaxed sm:text-lg lg:text-xl mx-auto max-w-3xl"
+            />
             
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 text-base">
@@ -68,7 +66,7 @@ export default function Home() {
 
         {/* Key Metrics */}
         <section className="space-y-8">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {keyMetrics.map((metric, i) => (
               <Card key={i} className="relative overflow-hidden border-emerald-500/20 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-6 text-center shadow-lg">
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.1),transparent_70%)]" aria-hidden />
