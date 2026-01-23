@@ -15,7 +15,7 @@ async function migrateData() {
   console.log('🚀 Starting data migration from SQLite to PostgreSQL...\n');
 
   // Connect to SQLite
-  const sqlite = new sqlite3.Database('./dev.db', (err) => {
+  const sqlite = new sqlite3.Database('./prisma/dev.db', (err) => {
     if (err) {
       console.error('❌ Failed to connect to SQLite:', err.message);
       process.exit(1);
@@ -46,6 +46,15 @@ async function migrateData() {
       });
     };
 
+    // Helper to convert SQLite timestamp to ISO string
+    const toISODate = (value) => {
+      if (!value) return null;
+      if (typeof value === 'number') {
+        return new Date(value).toISOString();
+      }
+      return value;
+    };
+
     // Migrate Users
     console.log('👤 Migrating Users...');
     const users = await getAllRows('User');
@@ -56,7 +65,7 @@ async function migrateData() {
          ON CONFLICT (id) DO UPDATE SET
          name = EXCLUDED.name, email = EXCLUDED.email, "emailVerified" = EXCLUDED."emailVerified",
          image = EXCLUDED.image, "githubId" = EXCLUDED."githubId", role = EXCLUDED.role`,
-        [user.id, user.name, user.email, user.emailVerified, user.image, user.githubId, user.role, user.createdAt]
+        [user.id, user.name, user.email, toISODate(user.emailVerified), user.image, user.githubId, user.role, toISODate(user.createdAt)]
       );
     }
     console.log(`✓ Migrated ${users.length} users\n`);
@@ -78,13 +87,25 @@ async function migrateData() {
     console.log('📸 Migrating Media...');
     const media = await getAllRows('Media');
     for (const item of media) {
+      // Map old schema to new schema
       await pg.query(
-        `INSERT INTO "Media" (id, url, type, folder, filename, "projectGalleryId", "uploadedById", "createdAt")
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        `INSERT INTO "Media" (id, filename, url, "mimeType", width, height, size, "altText", caption, "uploadedById", "createdAt")
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
          ON CONFLICT (id) DO UPDATE SET
-         url = EXCLUDED.url, type = EXCLUDED.type, folder = EXCLUDED.folder, filename = EXCLUDED.filename,
-         "projectGalleryId" = EXCLUDED."projectGalleryId"`,
-        [item.id, item.url, item.type, item.folder, item.filename, item.projectGalleryId, item.uploadedById, item.createdAt]
+         filename = EXCLUDED.filename, url = EXCLUDED.url, "mimeType" = EXCLUDED."mimeType"`,
+        [
+          item.id, 
+          item.filename || item.url.split('/').pop(), // Use filename or extract from URL
+          item.url, 
+          item.type || 'image/jpeg', // Old 'type' column becomes mimeType
+          null, // width
+          null, // height
+          null, // size
+          null, // altText
+          null, // caption
+          item.uploadedById, 
+          toISODate(item.createdAt)
+        ]
       );
     }
     console.log(`✓ Migrated ${media.length} media items\n`);
@@ -101,7 +122,7 @@ async function migrateData() {
          status = EXCLUDED.status, featured = EXCLUDED.featured, tech = EXCLUDED.tech,
          tags = EXCLUDED.tags, images = EXCLUDED.images, "thumbnailId" = EXCLUDED."thumbnailId",
          "updatedAt" = EXCLUDED."updatedAt", "publishedAt" = EXCLUDED."publishedAt"`,
-        [proj.id, proj.title, proj.slug, proj.summary, proj.contentMDX, proj.status, proj.featured, proj.tech, proj.tags, proj.images, proj.thumbnailId, proj.creatorId, proj.createdAt, proj.updatedAt, proj.publishedAt]
+        [proj.id, proj.title, proj.slug, proj.summary, proj.contentMDX, proj.status, proj.featured, proj.tech, proj.tags, proj.images, proj.thumbnailId, proj.creatorId, toISODate(proj.createdAt), toISODate(proj.updatedAt), toISODate(proj.publishedAt)]
       );
     }
     console.log(`✓ Migrated ${projects.length} projects\n`);
@@ -118,7 +139,7 @@ async function migrateData() {
          authors = EXCLUDED.authors, venue = EXCLUDED.venue, year = EXCLUDED.year, doi = EXCLUDED.doi,
          "pdfUrl" = EXCLUDED."pdfUrl", tags = EXCLUDED.tags, status = EXCLUDED.status,
          "thumbnailId" = EXCLUDED."thumbnailId", "updatedAt" = EXCLUDED."updatedAt", "publishedAt" = EXCLUDED."publishedAt"`,
-        [paper.id, paper.title, paper.slug, paper.summary, paper.contentMDX, paper.authors, paper.venue, paper.year, paper.doi, paper.pdfUrl, paper.tags, paper.status, paper.thumbnailId, paper.creatorId, paper.createdAt, paper.updatedAt, paper.publishedAt]
+        [paper.id, paper.title, paper.slug, paper.summary, paper.contentMDX, paper.authors, paper.venue, paper.year, paper.doi, paper.pdfUrl, paper.tags, paper.status, paper.thumbnailId, paper.creatorId, toISODate(paper.createdAt), toISODate(paper.updatedAt), toISODate(paper.publishedAt)]
       );
     }
     console.log(`✓ Migrated ${research.length} research papers\n`);
@@ -135,7 +156,7 @@ async function migrateData() {
          "endDate" = EXCLUDED."endDate", location = EXCLUDED.location, "descriptionMDX" = EXCLUDED."descriptionMDX",
          highlights = EXCLUDED.highlights, "order" = EXCLUDED."order", "thumbnailId" = EXCLUDED."thumbnailId",
          "updatedAt" = EXCLUDED."updatedAt"`,
-        [exp.id, exp.company, exp.role, exp.startDate, exp.endDate, exp.location, exp.descriptionMDX, exp.highlights, exp.order, exp.thumbnailId, exp.createdAt, exp.updatedAt]
+        [exp.id, exp.company, exp.role, toISODate(exp.startDate), toISODate(exp.endDate), exp.location, exp.descriptionMDX, exp.highlights, exp.order, exp.thumbnailId, toISODate(exp.createdAt), toISODate(exp.updatedAt)]
       );
     }
     console.log(`✓ Migrated ${experiences.length} experiences\n`);
@@ -151,7 +172,7 @@ async function migrateData() {
          title = EXCLUDED.title, type = EXCLUDED.type, date = EXCLUDED.date,
          "descriptionMDX" = EXCLUDED."descriptionMDX", links = EXCLUDED.links,
          "thumbnailId" = EXCLUDED."thumbnailId", "updatedAt" = EXCLUDED."updatedAt"`,
-        [activity.id, activity.title, activity.type, activity.date, activity.descriptionMDX, activity.links, activity.thumbnailId, activity.createdAt, activity.updatedAt]
+        [activity.id, activity.title, activity.type, toISODate(activity.date), activity.descriptionMDX, activity.links, activity.thumbnailId, toISODate(activity.createdAt), toISODate(activity.updatedAt)]
       );
     }
     console.log(`✓ Migrated ${activities.length} activities\n`);
