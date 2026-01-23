@@ -1,26 +1,88 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Light Mode (Modern Professional) */
+    --rose-50: 236 240 241; /* #ECF0F1 */
+    --rose-100: 189 195 199; /* #BDC3C7 */
+    --rose-300: 127 140 141; /* #7F8C8D */
+    --rose-500: 52 73 94; /* #34495E */
+    --rose-700: 44 62 80; /* #2C3E50 */
+    
+    --amber-100: 236 240 241; /* #ECF0F1 */
+    --amber-700: 127 140 141; /* #7F8C8D */
+    
+    --accent: 127 140 141; /* #7F8C8D */
+    --surface: 236 240 241; /* #ECF0F1 */
+
+    --foreground: 44 62 80; /* #2C3E50 */
+    --background: 236 240 241; /* #ECF0F1 */
+  }
+
+  .dark {
+    /* Dark Mode */
+    --rose-50: 15 23 42; /* #0F172A (Generic Slate 900) */
+    --rose-100: 30 41 59; /* #1E293B (Slate 800) */
+    --rose-300: 203 213 225; /* #CBD5E1 (Slate 300 - Increased contrast from Slate 400) */
+    --rose-500: 56 189 248; /* #38BDF8 (Sky 400 - Readable accent) */
+    --rose-700: 248 250 252; /* #F8FAFC (Slate 50 - High contrast text) */
+    
+    --amber-100: 30 41 59; /* #1E293B */
+    --amber-700: 203 213 225; /* #CBD5E1 */
+    
+    --accent: 56 189 248;
+    --surface: 15 23 42;
+
+    --foreground: 248 250 252;
+    --background: 15 23 42;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  /* Subtler gradient for Light Mode */
+  background-image: linear-gradient(180deg, rgb(var(--rose-50)) 0%, rgba(189, 195, 199, 0.4) 100%),
+    url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 160 160%22%3E%3Cfilter id=%22n%22 x=%220%22 y=%220%22 width=%22100%25%22 height=%22100%25%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22160%22 height=%22160%22 filter=%22url(%23n)%22 opacity=%220.03%22/%3E%3C/svg%3E');
+  background-attachment: fixed;
+  background-size: cover, 360px;
+  background-repeat: no-repeat, repeat;
+  color: rgb(var(--foreground));
+  background-color: rgb(var(--background));
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Dark mode specific override for flatter background */
+.dark body {
+  background-image: none;
+  background-color: rgb(var(--background));
+}
+
+a {
+  color: inherit;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.75rem 1rem;
+  background: rgb(var(--rose-700));
+  color: rgb(var(--rose-50));
+  border-radius: 9999px;
+  outline: 3px solid rgb(var(--rose-500));
 }
