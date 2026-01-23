@@ -55,19 +55,27 @@ NEXT_PUBLIC_APP_URL=https://your-domain.vercel.app
 
 ### 4. Push Database Schema
 
-After setting up the database, run migrations:
+After setting up the database, run migrations using the helper script:
 
-```bash
-# If using Vercel Postgres, get connection string from Vercel dashboard
-npx prisma db push
+**PowerShell:**
+```powershell
+# Pull environment variables from Vercel
+vercel env pull .env.production
+
+# Push schema to production (uses unpooled connection)
+$env:DATABASE_URL="<your-database-url-unpooled>"; node scripts/push-production-schema.js
 ```
 
-Or from Vercel CLI:
-
+**Bash/Mac/Linux:**
 ```bash
-vercel env pull .env.local
-npx prisma db push
+vercel env pull .env.production
+DATABASE_URL="<your-database-url-unpooled>" node scripts/push-production-schema.js
 ```
+
+The script will:
+- Temporarily switch schema to PostgreSQL
+- Push schema to production
+- Restore local SQLite schema
 
 ### 5. Deploy
 
