@@ -5,6 +5,7 @@ import { db } from "@/lib/prisma";
 import type { Metadata } from "next";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Activities — Bim Yusuf",
@@ -16,11 +17,18 @@ export default async function ActivitiesPage() {
     orderBy: { date: "desc" },
   });
 
+  // Parse JSON fields and type-cast
+  const parsedActivities = activities.map((a) => ({
+    ...a,
+    links: JSON.parse(a.links) as string[],
+    type: a.type as "SPEAKER" | "MENTOR" | "AWARD" | "OSS",
+  }));
+
   const grouped = {
-    SPEAKER: activities.filter((a) => a.type === "SPEAKER"),
-    MENTOR: activities.filter((a) => a.type === "MENTOR"),
-    AWARD: activities.filter((a) => a.type === "AWARD"),
-    OSS: activities.filter((a) => a.type === "OSS"),
+    SPEAKER: parsedActivities.filter((a) => a.type === "SPEAKER"),
+    MENTOR: parsedActivities.filter((a) => a.type === "MENTOR"),
+    AWARD: parsedActivities.filter((a) => a.type === "AWARD"),
+    OSS: parsedActivities.filter((a) => a.type === "OSS"),
   };
 
   return (
@@ -34,7 +42,7 @@ export default async function ActivitiesPage() {
           </p>
         </div>
 
-        {activities.length === 0 ? (
+        {parsedActivities.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-rose-200 bg-white/50 px-8 py-16 text-center">
             <p className="text-slate-600">No activities yet. Check back soon!</p>
           </div>

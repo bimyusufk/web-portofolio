@@ -5,6 +5,7 @@ import { db } from "@/lib/prisma";
 import type { Metadata } from "next";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Experience — Bim Yusuf",

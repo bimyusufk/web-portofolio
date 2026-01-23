@@ -80,18 +80,16 @@ export function ImagePicker({ selectedImageId, onSelect, label = "Thumbnail", as
           />
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 rounded-xl">
             <Button
-              size="sm"
               variant="secondary"
               onClick={() => setIsOpen(true)}
-              className="bg-white"
+              className="bg-white px-3 py-1.5 text-sm"
             >
               Change
             </Button>
             <Button
-              size="sm"
               variant="secondary"
               onClick={() => onSelect(null, null)}
-              className="bg-white"
+              className="bg-white px-3 py-1.5 text-sm"
             >
               <X className="h-4 w-4" /> Remove
             </Button>

@@ -52,13 +52,13 @@ export default function Home() {
             </h1>
             
             <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white">
+              <Button asChild className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 text-base">
                 <Link href="/projects">
                   Lihat Proyek Saya
                   <ArrowUpRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">
+              <Button asChild variant="secondary" className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 px-6 py-3 text-base">
                 <Link href="/contact">Hubungi Saya</Link>
               </Button>
             </div>
