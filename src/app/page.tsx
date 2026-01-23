@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TypewriterText } from "@/components/typewriter-text";
-import { ArrowUpRight, Code2, Database, Brain, Container, GitBranch, Zap } from "lucide-react";
+import { ArrowUpRight, Code2, Database, Brain, Container, GitBranch, Zap, Layers, Users } from "lucide-react";
 import Link from "next/link";
 
 const keyMetrics = [
@@ -14,19 +14,29 @@ const keyMetrics = [
 
 const techStack = [
   {
-    category: "Web Architecture",
+    category: "Bahasa Pemrograman",
     icon: Code2,
-    skills: ["Next.js", "Laravel", "TALL Stack", "Database Design"],
+    skills: ["JavaScript/TypeScript", "Python", "PHP", "SQL", "HTML/CSS"],
   },
   {
-    category: "Data & AI",
+    category: "Framework & Library",
+    icon: Layers,
+    skills: ["Next.js", "React", "Laravel", "Tailwind CSS", "Livewire", "Node.js", "Express.js"],
+  },
+  {
+    category: "Database & Tools",
+    icon: Database,
+    skills: ["PostgreSQL", "MySQL", "MongoDB", "Prisma ORM", "Git", "Vercel", "Supabase"],
+  },
+  {
+    category: "Data & ML",
     icon: Brain,
-    skills: ["Python", "MongoDB", "PostgreSQL","ML Research", "Statistics"],
+    skills: ["PyTorch", "OpenCV", "Pandas", "NumPy", "Scikit-learn", "Matplotlib"],
   },
   {
-    category: "Tools",
-    icon: Container,
-    skills: ["Git", "Vercel", "CI/CD"],
+    category: "Soft Skill",
+    icon: Users,
+    skills: ["Technical Leadership", "Manajemen Proyek", "Agile/Scrum", "Kolaborasi Tim", "Penulisan Teknis"],
   },
 ];
 
@@ -109,7 +119,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-foreground">Keahlian Utama</h2>
             <p className="text-lg text-slate-600 dark:text-slate-400">Teknologi yang saya kuasai untuk membangun solusi end-to-end</p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {techStack.map((stack, i) => {
               const Icon = stack.icon;
               return (
@@ -136,42 +146,6 @@ export default function Home() {
               );
             })}
           </div>
-        </section>
-
-        {/* Detailed Skills Section */}
-        <section className="space-y-8">
-          <div className="text-center space-y-2">
-            <h2 className="text-3xl font-bold text-foreground">Keahlian Teknis Detail</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400">Kompetensi lengkap dalam pengembangan perangkat lunak</p>
-          </div>
-          <Card className="border-emerald-500/20 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-lg">
-            <div className="space-y-6">
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Bahasa Pemrograman</h3>
-                <p className="text-slate-700 dark:text-slate-300">JavaScript/TypeScript, Python, PHP, SQL, HTML/CSS</p>
-              </div>
-              
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Framework & Library</h3>
-                <p className="text-slate-700 dark:text-slate-300">Next.js, React, Laravel, Tailwind CSS, Livewire, Node.js, Express.js</p>
-              </div>
-              
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Database & Tools</h3>
-                <p className="text-slate-700 dark:text-slate-300">PostgreSQL, MySQL, MongoDB, Prisma ORM, Git, Vercel, Supabase</p>
-              </div>
-              
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Data & ML</h3>
-                <p className="text-slate-700 dark:text-slate-300">PyTorch, OpenCV, Pandas, NumPy, Scikit-learn, Matplotlib</p>
-              </div>
-              
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Soft Skill</h3>
-                <p className="text-slate-700 dark:text-slate-300">Technical Leadership, Manajemen Proyek, Agile/Scrum, Kolaborasi Tim, Penulisan Teknis</p>
-              </div>
-            </div>
-          </Card>
         </section>
       </main>
       <SiteFooter />
