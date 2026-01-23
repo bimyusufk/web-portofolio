@@ -70,7 +70,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <ModeToggle />
           <Button variant="secondary" className="hidden sm:inline-flex" asChild>
-            <Link href="/cv.pdf" download>
+            <Link href="/cv-bim-yusuf-karang.pdf" download>
               CV
             </Link>
           </Button>
@@ -108,7 +108,7 @@ export function SiteHeader() {
             ))}
             <hr className="my-2 border-rose-100" />
             <Link
-              href="/cv.pdf"
+              href="/cv-bim-yusuf-karang.pdf"
               download
               className="rounded-xl px-4 py-3 text-base font-semibold text-slate-700 transition hover:bg-rose-50 hover:text-rose-900"
             >

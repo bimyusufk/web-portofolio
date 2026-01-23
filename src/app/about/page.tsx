@@ -38,7 +38,7 @@ export default function AboutPage() {
             </div>
             <div className="flex flex-wrap justify-center gap-2 md:justify-start">
               <Button asChild>
-                <Link href="/cv.pdf" download>
+                <Link href="/cv-bim-yusuf-karang.pdf" download>
                   <Download className="h-4 w-4" /> CV
                 </Link>
               </Button>

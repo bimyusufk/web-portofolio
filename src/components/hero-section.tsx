@@ -77,8 +77,8 @@ export function HeroSection() {
 
           <motion.div variants={child} className="flex flex-wrap gap-4">
             <Button asChild>
-              <Link href="/resume.pdf" download>
-                <Download className="h-4 w-4" /> Download Resume
+              <Link href="/cv-bim-yusuf-karang.pdf" download>
+                <Download className="h-4 w-4" /> Download CV
               </Link>
             </Button>
             <Button variant="secondary" asChild>
