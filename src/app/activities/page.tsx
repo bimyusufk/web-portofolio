@@ -12,13 +12,25 @@ export const metadata: Metadata = {
   description: "Speaking engagements, mentoring, awards, and open-source contributions by Bim Yusuf.",
 };
 
+type ParsedActivity = {
+  id: string;
+  title: string;
+  type: "SPEAKER" | "MENTOR" | "AWARD" | "OSS";
+  date: Date;
+  descriptionMDX: string;
+  links: string[];
+  thumbnailId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export default async function ActivitiesPage() {
   const activities = await db.activity.findMany({
     orderBy: { date: "desc" },
   });
 
   // Parse JSON fields and type-cast
-  const parsedActivities = activities.map((a) => ({
+  const parsedActivities: ParsedActivity[] = activities.map((a) => ({
     ...a,
     links: JSON.parse(a.links) as string[],
     type: a.type as "SPEAKER" | "MENTOR" | "AWARD" | "OSS",
@@ -36,8 +48,8 @@ export default async function ActivitiesPage() {
       <SiteHeader />
       <main id="main-content" className="mx-auto flex max-w-4xl flex-col gap-12 px-4 py-12 lg:py-16">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">Activities</h1>
-          <p className="mt-2 text-lg text-slate-600">
+          <h1 className="text-3xl font-bold text-foreground sm:text-4xl">Activities</h1>
+          <p className="mt-2 text-lg text-[rgb(var(--foreground)/0.70)]">
             Speaking, mentoring, awards, and open-source contributions.
           </p>
         </div>
@@ -50,7 +62,7 @@ export default async function ActivitiesPage() {
           <div className="space-y-12">
             {grouped.SPEAKER.length > 0 && (
               <section className="space-y-4">
-                <h2 className="text-xl font-bold text-slate-900">Speaking</h2>
+                <h2 className="text-xl font-bold text-foreground">Speaking</h2>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {grouped.SPEAKER.map((a) => (
                     <ActivityCard key={a.id} activity={a} />
@@ -61,7 +73,7 @@ export default async function ActivitiesPage() {
 
             {grouped.MENTOR.length > 0 && (
               <section className="space-y-4">
-                <h2 className="text-xl font-bold text-slate-900">Mentoring</h2>
+                <h2 className="text-xl font-bold text-foreground">Mentoring</h2>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {grouped.MENTOR.map((a) => (
                     <ActivityCard key={a.id} activity={a} />
@@ -72,7 +84,7 @@ export default async function ActivitiesPage() {
 
             {grouped.AWARD.length > 0 && (
               <section className="space-y-4">
-                <h2 className="text-xl font-bold text-slate-900">Awards</h2>
+                <h2 className="text-xl font-bold text-foreground">Awards</h2>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {grouped.AWARD.map((a) => (
                     <ActivityCard key={a.id} activity={a} />
@@ -83,7 +95,7 @@ export default async function ActivitiesPage() {
 
             {grouped.OSS.length > 0 && (
               <section className="space-y-4">
-                <h2 className="text-xl font-bold text-slate-900">Open Source</h2>
+                <h2 className="text-xl font-bold text-foreground">Open Source</h2>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {grouped.OSS.map((a) => (
                     <ActivityCard key={a.id} activity={a} />
