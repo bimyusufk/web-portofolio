@@ -137,6 +137,42 @@ export default function Home() {
             })}
           </div>
         </section>
+
+        {/* Detailed Skills Section */}
+        <section className="space-y-8">
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-bold text-foreground">Keahlian Teknis Detail</h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400">Kompetensi lengkap dalam pengembangan perangkat lunak</p>
+          </div>
+          <Card className="border-emerald-500/20 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-lg">
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Bahasa Pemrograman</h3>
+                <p className="text-slate-700 dark:text-slate-300">JavaScript/TypeScript, Python, PHP, SQL, HTML/CSS</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Framework & Library</h3>
+                <p className="text-slate-700 dark:text-slate-300">Next.js, React, Laravel, Tailwind CSS, Livewire, Node.js, Express.js</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Database & Tools</h3>
+                <p className="text-slate-700 dark:text-slate-300">PostgreSQL, MySQL, MongoDB, Prisma ORM, Git, Vercel, Supabase</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Data & ML</h3>
+                <p className="text-slate-700 dark:text-slate-300">PyTorch, OpenCV, Pandas, NumPy, Scikit-learn, Matplotlib</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h3 className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Soft Skill</h3>
+                <p className="text-slate-700 dark:text-slate-300">Technical Leadership, Manajemen Proyek, Agile/Scrum, Kolaborasi Tim, Penulisan Teknis</p>
+              </div>
+            </div>
+          </Card>
+        </section>
       </main>
       <SiteFooter />
     </div>
