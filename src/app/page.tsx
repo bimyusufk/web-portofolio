@@ -7,10 +7,9 @@ import { ArrowUpRight, Code2, Database, Brain, Container, GitBranch, Zap } from 
 import Link from "next/link";
 
 const keyMetrics = [
-  { value: "9.600+", label: "Sertifikat Digital Diterbitkan Secara Otomatis" },
   { value: "4.500+", label: "Pengguna Aktif Dilayani Secara Stabil" },
-  { value: "5+", label: "Proyek Teknologi Berskala Besar" },
-  { value: "6", label: "Pengalaman Kerja & Kepemimpinan Organisasi" },
+  { value: "5+", label: "Proyek Teknologi" },
+  { value: "6", label: "Pengalaman & Kepemimpinan Organisasi" },
 ];
 
 const techStack = [
