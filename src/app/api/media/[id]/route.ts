@@ -1,8 +1,7 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
+import { del } from "@vercel/blob";
 
 export const runtime = "nodejs";
 
@@ -25,18 +24,12 @@ export async function DELETE(
       return NextResponse.json({ error: "File not found" }, { status: 404 });
     }
 
-    // Delete local file if it exists
+    // Delete from Vercel Blob Storage
     if (file.url) {
       try {
-        // Expecting URL like /uploads/media/{folder}/{filename}
-        const urlPath = file.url.split("/uploads/media/")[1];
-        if (urlPath) {
-          const absolutePath = path.join(process.cwd(), "public", "uploads", "media", urlPath);
-          await fs.unlink(absolutePath).catch(() => {});
-        }
+        await del(file.url);
       } catch (e) {
-        // ignore file delete errors
-        console.warn("Failed to delete local file", e);
+        console.warn("Failed to delete blob file", e);
       }
     }
 
