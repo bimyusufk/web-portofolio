@@ -1,0 +1,137 @@
+import { defineArrayMember, defineField, defineType } from "sanity";
+import { Boxes } from "lucide-react";
+
+export const project = defineType({
+  name: "project",
+  title: "Proyek",
+  type: "document",
+  icon: Boxes,
+  groups: [
+    { name: "content", title: "Konten", default: true },
+    { name: "meta", title: "Metadata" },
+    { name: "media", title: "Media" },
+  ],
+  fields: [
+    defineField({
+      name: "title",
+      title: "Judul",
+      type: "localeString",
+      group: "content",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      group: "content",
+      description: "Satu slug dipakai untuk kedua bahasa.",
+      options: {
+        source: (doc: Record<string, unknown>) => (doc.title as { id?: string } | undefined)?.id ?? "",
+        maxLength: 96,
+      },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "summary",
+      title: "Ringkasan",
+      type: "localeText",
+      group: "content",
+      description: "Satu sampai dua kalimat. Tampil di kartu daftar dan hasil pencarian.",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "body",
+      title: "Studi kasus",
+      type: "localeBlock",
+      group: "content",
+    }),
+    defineField({
+      name: "role",
+      title: "Peran",
+      type: "localeString",
+      group: "meta",
+      description: 'Contoh: "Tech Lead", "Full-stack Developer".',
+    }),
+    defineField({
+      name: "projectType",
+      title: "Jenis proyek",
+      type: "localeString",
+      group: "meta",
+      description: 'Contoh: "Aplikasi Web", "Sistem Pendukung Keputusan".',
+    }),
+    defineField({
+      name: "techStack",
+      title: "Teknologi",
+      type: "array",
+      group: "meta",
+      of: [defineArrayMember({ type: "string" })],
+      options: { layout: "tags" },
+    }),
+    defineField({
+      name: "metrics",
+      title: "Metrik dampak",
+      type: "array",
+      group: "meta",
+      of: [defineArrayMember({ type: "metric" })],
+      description: "Angka hasil nyata dari sistem yang berjalan. Maksimal tiga agar tetap terbaca.",
+      validation: (rule) => rule.max(3),
+    }),
+    defineField({ name: "demoUrl", title: "URL demo", type: "url", group: "meta" }),
+    defineField({ name: "repoUrl", title: "URL repositori", type: "url", group: "meta" }),
+    defineField({
+      name: "year",
+      title: "Tahun",
+      type: "string",
+      group: "meta",
+      description: "Kosongkan untuk mengambil tahun dari tanggal terbit.",
+    }),
+    defineField({
+      name: "featured",
+      title: "Tampilkan sebagai unggulan",
+      type: "boolean",
+      group: "meta",
+      initialValue: false,
+    }),
+    defineField({
+      name: "publishedAt",
+      title: "Tanggal terbit",
+      type: "datetime",
+      group: "meta",
+      initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
+      name: "cover",
+      title: "Gambar sampul",
+      type: "contentImage",
+      group: "media",
+      description: "Rasio 16:10 memberi hasil terbaik pada kartu daftar.",
+    }),
+    defineField({
+      name: "gallery",
+      title: "Galeri",
+      type: "array",
+      group: "media",
+      of: [defineArrayMember({ type: "contentImage" })],
+      options: { layout: "grid" },
+    }),
+  ],
+  orderings: [
+    {
+      title: "Unggulan lalu terbaru",
+      name: "featuredDesc",
+      by: [
+        { field: "featured", direction: "desc" },
+        { field: "publishedAt", direction: "desc" },
+      ],
+    },
+    { title: "Terbaru", name: "publishedDesc", by: [{ field: "publishedAt", direction: "desc" }] },
+  ],
+  preview: {
+    select: { title: "title.id", subtitle: "role.id", media: "cover", featured: "featured" },
+    prepare: ({ title, subtitle, media, featured }) => ({
+      title: featured ? `★ ${title}` : title,
+      subtitle,
+      media,
+    }),
+  },
+});

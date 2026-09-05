@@ -45,3 +45,6 @@ next-env.d.ts
 
 .vercel
 .env*.local
+
+# Berkas contoh env sengaja ikut ter-commit sebagai dokumentasi.
+!.env.example

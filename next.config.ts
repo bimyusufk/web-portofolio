@@ -1,16 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**.public.blob.vercel-storage.com",
-      },
-    ],
+    // Seluruh media disajikan dari CDN Sanity.
+    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
+    formats: ["image/avif", "image/webp"],
   },
+  typedRoutes: false,
 };
 
 export default nextConfig;

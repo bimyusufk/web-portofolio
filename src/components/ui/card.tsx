@@ -1,22 +1,43 @@
-import { cn } from "@/lib/utils";
 import * as React from "react";
 
-export const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, children, ...props }, ref) => (
+import { cn } from "@/lib/utils";
+
+/**
+ * Kartu Google Cloud: latar permukaan, garis 1px, sudut 8px, tanpa bayangan saat diam.
+ * Bayangan hanya muncul pada kartu yang bisa diklik ketika di-hover -
+ * itulah sinyal "bisa ditekan" di Material, bukan dekorasi.
+ */
+export function Card({
+  className,
+  interactive = false,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { interactive?: boolean }) {
+  return (
     <div
-      ref={ref}
       className={cn(
-        "relative overflow-hidden rounded-2xl bg-white/80 dark:bg-slate-800/50 p-6 shadow-card ring-1 ring-rose-50 dark:ring-slate-700/50 backdrop-blur",
+        "rounded-lg border border-line bg-surface",
+        interactive &&
+          "transition-shadow duration-fast ease-standard hover:shadow-elevation-2 focus-within:shadow-elevation-2",
         className,
       )}
       {...props}
-    >
-      <div className="pointer-events-none absolute inset-0 opacity-70 dark:opacity-40" aria-hidden>
-        <div className="absolute -inset-10 bg-gradient-to-br from-rose-50 via-white to-amber-100 dark:from-slate-700/10 dark:via-slate-800/5 dark:to-slate-700/10" />
-      </div>
-      <div className="relative space-y-3">{children}</div>
-    </div>
-  ),
-);
+    />
+  );
+}
 
-Card.displayName = "Card";
+export function CardBody({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn("p-6", className)} {...props} />;
+}
+
+export function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
+  return <h3 className={cn("text-subtitle text-ink", className)} {...props} />;
+}
+
+export function CardText({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
+  return <p className={cn("text-ui text-ink-secondary", className)} {...props} />;
+}
+
+/** Garis pemisah internal kartu, memakai warna pembatas yang lebih halus. */
+export function CardDivider({ className }: { className?: string }) {
+  return <div className={cn("h-px bg-line-subtle", className)} role="presentation" />;
+}
