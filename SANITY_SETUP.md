@@ -46,7 +46,7 @@ Buat token di <https://sanity.io/manage> → pilih project → **API** → **Tok
 | Variabel | Peran token | Kegunaan |
 | --- | --- | --- |
 | `SANITY_API_WRITE_TOKEN` | Editor | Skrip migrasi (langkah 3). Boleh dihapus setelah selesai. |
-| `SANITY_API_READ_TOKEN` | Viewer | Opsional, untuk pratinjau draf. |
+| `SANITY_API_READ_TOKEN` | Viewer | **Wajib.** `sanity init` membuat dataset privat secara default - tanpa token ini, seluruh halaman tampil kosong (bukan error, cuma sunyi) meski kontennya sudah dipublish. |
 | `SANITY_REVALIDATE_SECRET` | — | String acak buatan sendiri, untuk webhook (langkah 5). |
 
 Menghasilkan rahasia acak:
@@ -124,11 +124,11 @@ Di Vercel (atau host lain), isi variabel lingkungan berikut:
 
 | Variabel | Catatan |
 | --- | --- |
-| `NEXT_PUBLIC_SANITY_PROJECT_ID` | wajib |
-| `NEXT_PUBLIC_SANITY_DATASET` | `production` |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | wajib - persis apa adanya, tanpa kutip atau spasi (kolom di dashboard hosting tidak membuang kutip seperti `.env.local`) |
+| `NEXT_PUBLIC_SANITY_DATASET` | wajib - samakan dengan dataset yang benar-benar dipakai `sanity.config.ts`, bukan diasumsikan `production` |
 | `NEXT_PUBLIC_SITE_URL` | URL produksi, tanpa garis miring di akhir |
 | `SANITY_REVALIDATE_SECRET` | wajib agar webhook berfungsi |
-| `SANITY_API_READ_TOKEN` | opsional |
+| `SANITY_API_READ_TOKEN` | **wajib** - dataset privat secara default, tanpa ini situs tampil kosong |
 
 `SANITY_API_WRITE_TOKEN` **tidak perlu** dipasang di produksi — token itu hanya
 dipakai skrip migrasi di mesin lokal.
